@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-baloo), var(--font-nunito), ui-sans-serif, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-lavender: var(--lavender);
+  --color-mint: var(--mint);
+  --color-cream: var(--cream);
+  --color-slate: var(--slate);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+:root {
+  color-scheme: light;
+
+  /* Pixel Pastel palette */
+  --background: oklch(0.965 0.018 305); /* soft lavender-cream */
+  --foreground: oklch(0.34 0.045 275); /* slate */
+  --card: oklch(0.995 0.004 300);
+  --card-foreground: oklch(0.34 0.045 275);
+  --popover: oklch(0.995 0.004 300);
+  --popover-foreground: oklch(0.34 0.045 275);
+
+  --primary: oklch(0.74 0.115 295); /* lavender */
+  --primary-foreground: oklch(0.99 0.005 300);
+  --secondary: oklch(0.87 0.085 165); /* soft mint */
+  --secondary-foreground: oklch(0.34 0.045 275);
+  --accent: oklch(0.9 0.09 95); /* cream yellow */
+  --accent-foreground: oklch(0.34 0.045 275);
+
+  --muted: oklch(0.93 0.02 300);
+  --muted-foreground: oklch(0.5 0.04 280);
+  --destructive: oklch(0.62 0.2 20);
+  --destructive-foreground: oklch(0.99 0.005 300);
+
+  --border: oklch(0.34 0.045 275); /* slate outline */
+  --input: oklch(0.34 0.045 275);
+  --ring: oklch(0.74 0.115 295);
+
+  /* named accents */
+  --lavender: oklch(0.74 0.115 295);
+  --mint: oklch(0.87 0.085 165);
+  --cream: oklch(0.9 0.09 95);
+  --slate: oklch(0.34 0.045 275);
+
+  --radius: 0.25rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer components {
+  /* Chunky voxel container: hard slate outline + offset shadow */
+  .pixel-box {
+    border: 3px solid var(--slate);
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0 0 var(--slate);
+  }
+  .pixel-box-sm {
+    border: 2px solid var(--slate);
+    border-radius: var(--radius);
+    box-shadow: 3px 3px 0 0 var(--slate);
+  }
+
+  /* Chunky pressable button */
+  .pixel-btn {
+    border: 3px solid var(--slate);
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0 0 var(--slate);
+    transition:
+      transform 80ms ease,
+      box-shadow 80ms ease;
+  }
+  .pixel-btn:hover:not(:disabled) {
+    transform: translate(1px, 1px);
+    box-shadow: 3px 3px 0 0 var(--slate);
+  }
+  .pixel-btn:active:not(:disabled) {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 var(--slate);
+  }
+  .pixel-btn:disabled {
+    opacity: 0.55;
+    box-shadow: 2px 2px 0 0 var(--slate);
+  }
+
+  /* Faint pixel-grid backdrop */
+  .pixel-grid-bg {
+    background-image:
+      linear-gradient(oklch(0.34 0.045 275 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(0.34 0.045 275 / 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+}
+
+@keyframes pixel-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-pixel-pop {
+  animation: pixel-pop 260ms cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+@keyframes banner-in {
+  0% {
+    transform: translateY(-24px) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+.animate-banner-in {
+  animation: banner-in 320ms cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
